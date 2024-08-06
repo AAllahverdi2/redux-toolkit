@@ -1,0 +1,14 @@
+.header__all{
+background-color: lightblue;
+    height: 50px;
+    display: flex;
+align-items: center;
+gap: 30px;
+font-size: 23px;
+padding: 30px;
+a{
+    color: white;
+    text-decoration: none;
+
+}
+}
