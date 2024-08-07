@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 const initialState = {
   items: JSON.parse(localStorage.getItem('basket')) || [],
   totalPrice: JSON.parse(localStorage.getItem('totalPrice')) || 0,
@@ -32,6 +33,9 @@ export const basketSlice = createSlice({
       localStorage.setItem('basket', JSON.stringify(state.items));
       localStorage.setItem('totalPrice', JSON.stringify(state.totalPrice));
       localStorage.setItem('count', JSON.stringify(state.count));
+      toast.success("added to basket")
+      alert("item added olundu")
+
     },
     removeFromBasket: (state, action) => {
       const id = action.payload;

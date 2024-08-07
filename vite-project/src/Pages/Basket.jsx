@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFromBasket, increaseQuantity, decreaseQuantity } from '../REDUX/basketSlice/basketSlice';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Basket = () => {
   const dispatch = useDispatch();
@@ -8,14 +9,19 @@ const Basket = () => {
 
   const handleRemove = (id) => {
     dispatch(removeFromBasket(id));
+    toast.success("silindi")
+
   };
 
   const handleIncrease = (id) => {
     dispatch(increaseQuantity(id));
+    toast.success("artirildi")
+
   };
 
   const handleDecrease = (id) => {
     dispatch(decreaseQuantity(id));
+    toast.success("azaldi")
   };
 
   return (
@@ -44,12 +50,12 @@ const Basket = () => {
                   <td>${item.price}</td>
                   <td>
                     <button className='btn btn-info' onClick={() => handleDecrease(item.id)}>-</button>
-                    {item.quantity || 1}
+                   <span style={{padding:"10px"}}> {item.quantity || 1}</span>
                     <button className='btn btn-danger' onClick={() => handleIncrease(item.id)}>+</button>
                   </td>
                   <td>${(item.price * (item.quantity || 1))}</td>
                   <td>
-                    <button onClick={() => handleRemove(item.id)}>Remove</button>
+                    <button className='btn btn-danger' onClick={() => handleRemove(item.id)}><i class="fa-regular fa-trash-can"></i></button>
                   </td>
                 </tr>
               ))}
@@ -61,6 +67,7 @@ const Basket = () => {
           </div>
         </>
       )}
+      <Toaster/>
     </div>
   );
 };

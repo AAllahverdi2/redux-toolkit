@@ -2,9 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFromWishList } from '../REDUX/wishListSlice/wishListSlice';
 import "./Fav.css"
+import { Toaster } from 'react-hot-toast';
 const Fav = () => {
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist.items); // `state.wishlist.items` kullanın
+  const wishlist = useSelector((state) => state.wishlist.items); 
 
   console.log("wishlist", wishlist);
 
@@ -35,6 +36,7 @@ const Fav = () => {
           })
         }
       </div>
+      <Toaster/>
     </div>
   );
 };

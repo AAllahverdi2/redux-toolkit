@@ -1,61 +1,56 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addCategory } from '../REDUX/categorySlice/Category.Slice';
-import './Add.css'; // Normal CSS
-
+import React, { useState } from 'react'
+import { useAddCategoryMutation } from '../services/CategorySlice/categortSlice'
+import './Add.css'
 const Add = () => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const dispatch = useDispatch();
+    const [formData, setFormData] = useState({ name: '', description: '', price: '' })
+    const [addCategory] = useAddCategoryMutation()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newCategory = { name, description, price };
-    try {
-      await dispatch(addCategory(newCategory)).unwrap();
-      setName('');
-      setDescription('');
-      setPrice('');
-    } catch (error) {
-      console.error('Failed to save the category: ', error);
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData({ ...formData, [name]: value })
     }
-  };
 
-  return (
-    <div className="container1">
-      <form onSubmit={handleSubmit}>
-        <div className="formGroup">
-          <label className="label">Name</label>
-          <input 
-            className="input"
-            type="text" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-          />
-        </div>
-        <div className="formGroup">
-          <label className="label">Description</label>
-          <input 
-            className="input"
-            type="text" 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)} 
-          />
-        </div>
-        <div className="formGroup">
-          <label className="label">Price</label>
-          <input 
-            className="input"
-            type="number" 
-            value={price} 
-            onChange={(e) => setPrice(e.target.value)} 
-          />
-        </div>
-        <button type="submit" className="button">Add Category</button>
-      </form>
-    </div>
-  );
-};
+    const handleAdd = async (e) => {
+        e.preventDefault()
+        try {
+            const response = await addCategory(formData).unwrap()
+            console.log('Response:', response)
+            setFormData({ name: '', description: '', price: '' })
+            window.location.reload()
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
-export default Add;
+    return (
+        <form onSubmit={handleAdd}>
+            <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Name"
+                required
+            />
+            <input
+                type="text"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
+                required
+            />
+            <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                placeholder="Price"
+                required
+            />
+            <button type="submit">Add</button>
+        </form>
+    )
+}
+
+export default Add

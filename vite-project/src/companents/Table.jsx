@@ -14,6 +14,8 @@ const Table = () => {
   }, [])
   return (
     <div>
+                 <div style={{display:"flex", justifyContent:"center", alignItems:"center", fontSize:"30px"}}><strong>Redux</strong></div>
+
       <table class="table">
         <thead>
           <tr>
@@ -36,7 +38,7 @@ const Table = () => {
                   <th scope="row">{item.id}</th>
                   <td>{item.name}</td>
                   <td>{item.description}</td>
-                  <td>{item.price}</td>
+                  <td>{item.price ? item.price : 'Price yoxdur deye basketde totalPrice ve price  islemiyecek bi dene priceli data post edin sonra  yoxlayin:)'}</td>
                   <td><button className='btn btn-info' onClick={() => {
                     dispatch(deleteData(item.id))
                   }}><i class="fa-regular fa-trash-can"></i></button></td>
